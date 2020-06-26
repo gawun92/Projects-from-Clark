@@ -1,0 +1,86 @@
+#!/bin/bash
+# Gawun Kim
+# CSE224
+# OCT/29/2017
+# Program Assignment
+
+echo "|ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ|"
+echo "|                                           Hello!!                                                  |" 		
+echo "|                                       I am Gawun Kim~~                                             |"		
+echo "|                                 We are going to play highlow game.                                 |"				
+echo "|ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ|"
+echo "|*****************************************Description************************************************|"
+echo "|ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ|"
+echo "|         At first, if you typed some number that you wanted to the right side of the file name      |"
+echo "|                That number will be set the highest number and lowest number is 1 always            |"
+echo "|                  And then you(user) should think one number between these two numbers              |"
+echo "|                             Then I(computer) will guess the number                                 |"
+echo "|   I am going to suggest some number, then please let me know whether it is high or low or correct  |"
+echo "|                                                                                                    |"
+echo "|                             * If the number is high please type      "h"                             |"
+echo "|                             * If the number is low please type       "l"                             |"
+echo "|                             * If the number is correct please type   "c"                             |"
+echo "|ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ|"
+echo "|                     If you want to keep going on this game Please hit the Enter!!                  |"
+echo "|ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ|"
+
+
+
+	if [ "$#" -eq 0 ] 				# This 'if' loop is to determine the highest number
+	 then				
+		high=100				# if there is nothing. Computer automatically recognizes the highest number as 100 
+		low=1
+	 else
+		high=$1					# if a user inputs some numbers, and it will be the highest number.
+		low=1
+	fi
+echo "Okay Lets start the game. Think of one number between 1 to $high  If you decided the number hit ENTER !!"
+read -n 123123 						# just for hit enter key
+echo "Are you ready?????????????????? If you are ready, Enter!!"
+read -n 123123				
+echo "Are you ready?? Seriously??? Make sure your number!! It is the last chance to think a number!!If then Enter!!"
+echo ""
+
+
+ let i=0							# This is for checking trial. And the trials will be counted into while loop.
+							# And, this is just for setting the basis of that.
+
+while [[ "$ans" != "c" ]] && [[ "$low" -le "$high" ]]	# if the first given number is not correct and this loop makes computer keep suggest numbers. 
+	do
+      guess=$[(high+low)/2]	
+	echo -n "Is your number "$guess" ?   -> "
+	read -n 1 ans					# This part is requiring input.
+
+	echo ""
+		if [ "$ans" == "h" ]			# if user typed 'h', 
+		then
+
+		let  high=$guess-1			# then the range will be arranged.
+
+		elif [ "$ans" == "l" ]			# if user typed 'l'
+		then			
+		let low=$guess+1			# then the range will be arranged
+						
+		elif [ "$ans" != "c" ]			# if a user does not type 'c, l, or h', computer will make user induce to type a valid input.
+		then
+		echo ""
+		echo "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡCautionㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"
+		echo ""
+		echo "Please press 'h' for higher or 'l' for lower than the number that you thought. or press 'c' if the guess is correct!!"
+		echo ""
+		echo "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ"
+	let i=$i-1
+		fi
+let i=$i+1						# The trial will be counted during the while loop.
+done
+
+
+
+if [ "$ans" == "c" ]					# if user input c, it means the number is correct!
+then
+echo "HaHa~~ You were thinking $guess. I got it in $i times. Thank you for playing!"
+
+elif [ "$low" -gt "$high" ]				# if low number is bigger than high number.
+then
+echo "You are cheater~!!! or Something is wrong. Did you forget your number? Bye!!"				
+fi

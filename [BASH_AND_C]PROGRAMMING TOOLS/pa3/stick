@@ -1,0 +1,148 @@
+#!/bin/bash
+# Gawun Kim
+# CSE224
+# OCT / 06 / 2017
+# Programming Assignment 1
+
+
+h=$1										# h(I defined) is a variable to be total number (input)
+echo ""										
+   if [[ "$h" -le "0" ]] || [[ "$h" == "" ]]                                                      # if h is less than or same with zero or none??? 
+    then
+     echo ""									# Just blank
+     echo "You should insert some number bigger than 1. I will give one more chance."
+     echo ""									# Just blank
+	read var1
+	h=$var1								# The second input is necessay  in case of that first one was not positive integer
+								# The second input also has to be possible to be used in outside of this loop so that I wrote it as h
+	   if [[ "$h" -le "0" ]] || [[ "$h" == "" ]]                                               # This if loop is also same with the above one. 
+       	    then								
+	     echo ""
+             echo "                           ):  Bye  :(           "
+	     echo ""
+	     echo "---------------------------- THE END ---------------------------------"
+	     echo ""						# This loop is the last chance to type the total number.
+	    exit						# That is why I used "exit" because it was the last chance. and  command to quit this play
+	   fi							# The end of the second if loop
+		
+    fi								# The end of the first if loop
+
+
+###########################    # <- The left block is the "for" loop for the sticks. Before this code, tester already typed the input above
+for ((x=0; x<$h; x++))    #    #   	And, the number of sticks are generated from the number of input                         
+do			  #    
+			  #
+echo -n "|"		  #    <- This is one stick and it will be gathered from counting by for loop
+			  #
+done			  #
+echo -n "($h)"   	  #  <- Tester does not need to count each of sticks one by one. And the number of sticks will be shown on the most right side of the sticks
+echo ""			  #  <- This blank echo is for making | sign horizontally ... if I do not use it, the | signs are generated vertically
+###########################
+echo ""
+echo "     The number of the above bars is "$h""					# Just signal to make sure of the number of sticks
+echo "--------------------------------------------------------------------------------------------------------------------"
+echo "     Okay! Let's get started!"
+					# At first, tester inserted the total number and that number has to be available in other parts
+while [[ $h -ge 0 ]]		# The while loop will be used when x is greater than zero. It means this loop will work when x is bigger than 0
+								# Also, this loop makes player and computer play the game one by one until someone to be winner
+	do						
+	echo ""					# This while loop makes the codes work until x is zero. At fisrt, the value of h is from the first input
+	echo "                               My turn"  # However, the h from the second time of the while loop is calculated one.
+	echo ""
+#################################################   This block is the code that computer works on this game.
+			if [ $(($h%4)) = "0" ] 	#   This is the critical point in the program. n%4 is the remainder when divided by 4.	
+				then	        #   However, when n is some multiple of 4, the result of n%4 would be zero. 
+				        	#
+				 z=$(($h-1))    # <- So this code is "When n%4 is zero, it has to be considered as 1 "
+######################                          #    That is why, the input(total number) - "n%4"(it is always 1 when n is multiple of 4)
+for((x=0; x<$z; x++))# 				#
+do		     #				#    If I do not write the above way, in case of that n is multiple of 4, it is zero so that it is illegal number.
+		     # <- This is for the code	#
+echo -n "|"	     #	  regarding the sticks	#
+done		     #    to be generated	#
+echo -n "($z)"	     #    I mentioned it before	#
+echo ""   	     #				#
+######################				#
+			else			#
+						#
+		             z=$(($h-($h%4)))	#  <- "n" - "n/4"    when "x%4" is not zero
+######################				#
+for((x=0; x<$z; x++))#				#
+do		     #				#
+		     # <- This is for the code	#
+echo -n "|"	     #	  regarding the sticks	#
+done		     #    to be generated	#
+echo -n "($z)"	     #    I mentioned it before	#
+echo ""		     #				#
+######################				# In this loop I used "if" and "else". There are two things---- 1, n%4 is zero?   or 2, n%4 is not zero?
+			fi			#				  However, each of them should be available to be used  outside of this part 
+#################################################				  So that I changed each of them as "z"
+
+			if [ $z == 0 ]                 # -> This part is to check whether computer does win or not. If the outcome after computer is  zero.
+						       #
+			then			       # If z value from above is zero, this if loop will work. If not, just skip it.
+				 	echo ""
+					echo "I win! You are loser!"
+					echo "I win! You are loser!"
+					echo ""
+					echo ""
+					echo "------------------------------------ THE END ------------------------------"
+					echo ""
+					exit		# The computer wins this game and the calculating will be stopped. And the game is stopped
+			 fi
+######################################################################################################################################################
+	echo ""							# From this part, the codes for player		
+	echo "                              Your Turn"
+	echo ""
+	read var2					# The var2 is the input to subtract from some sticks after calculating by computer
+	echo ""
+		if [[ $var2 < "1" ]] || [[ $var2 > "3" ]] || [[ $var2 = "" ]]   # my input has to be 1, 2, or 3. Without these things, such as  none or bigger than 3 
+	 	 then								# or smaller than 1, "if" loop is required. And I connected them by "or"
+		  echo ""
+		  echo "Input number has to be bigger than 1 and less thna 3"    # This is the first caution about the range of input
+		  echo ""
+ 		    read var2							#  input for second trial
+	          echo ""
+			if [[ $var2 < "1" ]] || [[ $var2 > 3 ]] || [[ $var2 == "" ]]    # This is the second trial. This coming input also has to be 1,2,or 3
+			  then
+			   echo ""
+			   echo "...... You should have to type 1,2, or 3!"
+			echo "You are Loser"
+			
+			   echo ""
+				
+				
+				
+			echo "----------------------------------The End-----------------------------------"	
+				
+				
+			   echo ""
+			   
+			 exit
+			 			# Though two trials are given, player did not follow direction so that fnish the game
+			fi   # The end of the second "if" loop (regarding second input)
+		fi   # The end of the first "if" loop (regarding first input)
+
+	
+	h=$(($z-$var2))   # so that player passed the "if" loop, the input(var2) will be used to be subtracted to z from the stated above.
+######################
+for((y=0; y<$h; y++))#
+do		     # <- This is for the code 
+		     #	  regarding the sticks
+echo -n "|"	     #    to be generated 
+done		     #	  I mentioned it before
+echo -n "($h)"	     #
+echo ""		     #
+######################
+
+			if [ $h == 0 ]  # This is for the check whether player wins this game or not. if the work that play did is zero. Player is winner
+			then
+				echo ""
+				echo "Wow! You win! You got it! Nice!"
+				echo ""
+				echo ""
+				echo "----------------------------- THE END ----------------------------"
+				echo ""
+				exit      # This "exit" makes to quit this loop and finish all 
+			fi 		  # The end of the if loop for the check
+	done
